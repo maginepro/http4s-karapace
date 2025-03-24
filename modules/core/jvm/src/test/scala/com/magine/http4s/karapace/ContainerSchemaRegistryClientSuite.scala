@@ -20,13 +20,15 @@ import cats.effect.IO
 import cats.effect.Resource
 import cats.syntax.all.*
 import java.io.File
+import munit.AnyFixture
 import org.http4s.Uri
 import org.http4s.ember.client.EmberClientBuilder
 import org.testcontainers.containers.DockerComposeContainer
 import org.testcontainers.containers.wait.strategy.Wait
+import scala.concurrent.duration.*
 
 final class ContainerSchemaRegistryClientSuite extends SchemaRegistryClientSuite {
-  val schemaRegistryClientFixture: Fixture[SchemaRegistryClient[IO]] = {
+  val schemaRegistryClientFixture: AnyFixture[SchemaRegistryClient[IO]] = {
     val schemaRegistryContainer: Resource[IO, DockerComposeContainer[?]] =
       Resource.make {
         IO.blocking {
@@ -53,9 +55,12 @@ final class ContainerSchemaRegistryClientSuite extends SchemaRegistryClientSuite
     )
   }
 
-  override def munitFixtures: Seq[Fixture[?]] =
+  override def munitFixtures: Seq[AnyFixture[?]] =
     schemaRegistryClientFixture +: super.munitFixtures
 
   override def schemaRegistryClient: IO[SchemaRegistryClient[IO]] =
     IO(schemaRegistryClientFixture())
+
+  override def munitIOTimeout: Duration =
+    2.minutes
 }
