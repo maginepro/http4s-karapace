@@ -1,6 +1,6 @@
 val catsEffectVersion = "3.6.0"
 val circeVersion = "0.14.8"
-val fs2Version = "3.11.0"
+val fs2Version = "3.12.0"
 val http4sVersion = "0.23.30"
 val munitCatsEffectVersion = "2.0.0"
 val scala213Version = "2.13.16"
