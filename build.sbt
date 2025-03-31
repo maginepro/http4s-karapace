@@ -13,6 +13,7 @@ inThisBuild(
     crossScalaVersions := Seq(scala213Version, scala3Version),
     developers := List(tlGitHubDev("vlovgr", "Viktor Rudebeck")),
     githubWorkflowJavaVersions := Seq(JavaSpec.temurin("17")),
+    githubWorkflowTargetBranches := Seq("**"),
     licenses := Seq(License.Apache2),
     organization := "com.magine",
     organizationName := "Magine Pro",
