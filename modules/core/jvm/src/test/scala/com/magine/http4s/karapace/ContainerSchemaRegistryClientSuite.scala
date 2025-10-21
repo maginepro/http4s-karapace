@@ -23,24 +23,24 @@ import java.io.File
 import munit.AnyFixture
 import org.http4s.Uri
 import org.http4s.ember.client.EmberClientBuilder
-import org.testcontainers.containers.DockerComposeContainer
+import org.testcontainers.containers.ComposeContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import scala.concurrent.duration.*
 
 final class ContainerSchemaRegistryClientSuite extends SchemaRegistryClientSuite {
   val schemaRegistryClientFixture: AnyFixture[SchemaRegistryClient[IO]] = {
-    val schemaRegistryContainer: Resource[IO, DockerComposeContainer[?]] =
+    val schemaRegistryContainer: Resource[IO, ComposeContainer] =
       Resource.make {
         IO.blocking {
-          val container: DockerComposeContainer[?] =
-            new DockerComposeContainer(new File("src/test/resources/compose.yml"))
+          val container: ComposeContainer =
+            new ComposeContainer(new File("src/test/resources/compose.yml"))
           container.withExposedService("karapace-registry", 8081, Wait.forHttp("/"))
           container.start()
           container
         }
       }(container => IO.blocking(container.stop()))
 
-    val schemaRegistryClient: DockerComposeContainer[?] => Resource[IO, SchemaRegistryClient[IO]] =
+    val schemaRegistryClient: ComposeContainer => Resource[IO, SchemaRegistryClient[IO]] =
       container =>
         EmberClientBuilder.default[IO].build.evalMap { client =>
           val host = container.getServiceHost("karapace-registry", 8081)
