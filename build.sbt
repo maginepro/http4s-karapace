@@ -1,11 +1,11 @@
-val catsEffectVersion = "3.6.3"
-val circeVersion = "0.14.8"
-val fs2Version = "3.12.2"
-val http4sVersion = "0.23.33"
-val munitCatsEffectVersion = "2.1.0"
+val catsEffectVersion = "3.7.0"
+val circeVersion = "0.14.15"
+val fs2Version = "3.13.0"
+val http4sVersion = "0.23.34"
+val munitCatsEffectVersion = "2.2.0"
 val scala213Version = "2.13.18"
 val scala3Version = "3.3.7"
-val scalaCheckEffectVersion = "2.0.0-M2"
+val scalaCheckEffectVersion = "2.1.0"
 val testcontainersVersion = "2.0.4"
 
 inThisBuild(
@@ -21,7 +21,7 @@ inThisBuild(
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
     startYear := Some(2025),
-    tlBaseVersion := "2.1",
+    tlBaseVersion := "2.2",
     tlCiHeaderCheck := true,
     tlCiScalafixCheck := true,
     tlCiScalafmtCheck := true,
@@ -57,4 +57,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
       "org.http4s" %% "http4s-ember-client" % http4sVersion % Test,
       "org.testcontainers" % "testcontainers" % testcontainersVersion % Test
     )
+  )
+  .nativeSettings(
+    tlVersionIntroduced := List("2.13", "3").map(_ -> "2.2.0").toMap
   )
