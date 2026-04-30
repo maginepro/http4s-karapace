@@ -6,7 +6,7 @@ val munitCatsEffectVersion = "2.2.0"
 val scala213Version = "2.13.18"
 val scala3Version = "3.3.7"
 val scalaCheckEffectVersion = "2.1.0"
-val testcontainersVersion = "2.0.4"
+val testcontainersVersion = "2.0.5"
 
 inThisBuild(
   Seq(
